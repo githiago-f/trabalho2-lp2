@@ -15,16 +15,17 @@ public class InterfaceExcluirDestinatario extends InterfaceBase implements Coman
     @Override
     public void executar() {
         try {
-            String nome = leDados("Nome do destinatario a ser removido: ");
-            Destinatario destinatario = destinatarioDAO.pesquisarPorNome(nome);
+            String nome = leDadosRetry("Informe o endereço do destinatário a ser removido");
+            Destinatario destinatario = destinatarioDAO.pesquisarPorNumero(nome);
             if(destinatario == null) {
                 throw new NaoEncontrado("Destinatario");
             }
             destinatarioDAO.excluir(destinatario);
-            Processador.direcionar("0");
-        } catch (NaoEncontrado | NaoEDestinatario | CampoVazioException e) {
+            JOptionPane.showMessageDialog(null, "Destinatário removido!");
+        } catch (NaoEncontrado | NaoEDestinatario e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage() +
+                    ". Você será redirecionado para a primeira tela");
         }
     }
 }

@@ -7,9 +7,6 @@ import model.dao.CorrespondenciaDAO;
 import model.dao.DestinatarioDAO;
 
 import javax.swing.*;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class InterfacePesquisarCorrespondencia extends InterfaceBase implements Comando{
@@ -20,23 +17,10 @@ public class InterfacePesquisarCorrespondencia extends InterfaceBase implements 
     public void executar() {
         // TODO: implementar as ações necessárias para pesquisar se existem correspondência
         //  não entregues para um determinado destinatário, identificando se são cartas ou pacotes
-        try {
-            String nome = leDados("");
-            Destinatario destinatario = destinatarioDAO.pesquisarPorNome(nome);
-            List<Correspondencia> correspondencias = correspondenciaDAO.pesquisarPorDestinatario(destinatario);
-            JOptionPane.showMessageDialog(null, asString(correspondencias));
-            Processador.direcionar("0");
-        } catch (CampoVazioException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }
-
-    static String asString(List<Correspondencia> correspondencias) {
-        StringBuilder sb = new StringBuilder();
-        for (Correspondencia correspondencia : correspondencias) {
-            sb.append(correspondencia).append('\n');
-        }
-        return sb.toString();
+        String numeroImovel = leDadosRetry("Informe o numero do imóvel");
+        Destinatario destinatario = destinatarioDAO.pesquisarPorNumero(numeroImovel);
+        List<Correspondencia> correspondencias = correspondenciaDAO.pesquisarNaoEntreguesPorDestinatario(destinatario);
+        JOptionPane.showMessageDialog(null, asString(correspondencias));
     }
 
 }

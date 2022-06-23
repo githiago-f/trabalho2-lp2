@@ -16,43 +16,32 @@ public class InterfacePesquisarDestinatario extends InterfaceBase implements Com
     @Override
     public void executar() {
         try {
-            String nomeOuImovel = leDados("Pesquisar por nome ou imovel?\n1) nome\n2) imovel");
+            String nomeOuImovel = leDadosRetry("Pesquisar por nome ou imovel?\n1) nome\n2) imovel");
             List<Destinatario> destinatarios = new ArrayList<>();
             switch (nomeOuImovel) {
                 case "1":
-                    destinatarios.add(buscaPorNome());
+                    destinatarios.addAll(buscaPorNome());
                     break;
                 case "2":
-                    destinatarios.addAll(buscaPorNumeroDoImovel());
+                    destinatarios.add(buscaPorNumeroDoImovel());
                     break;
                 default:
                     throw new PropriedadeInvalida(nomeOuImovel, "Destinatário");
             }
             JOptionPane.showMessageDialog(null, asString(destinatarios));
-            Processador.direcionar("0");
-        } catch (CampoVazioException | PropriedadeInvalida e) {
+        } catch (PropriedadeInvalida e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
-    private String asString(List<Destinatario> destinatarios) {
-        StringBuilder sb = new StringBuilder();
-        for (Destinatario destinatario : destinatarios) {
-            sb.append(destinatario).append("\n");
-        }
-        return sb.toString();
+    private Destinatario buscaPorNumeroDoImovel() {
+        String numeroDoImovel = leDadosRetry("Insira o numero do imóvel: ");
+        return destinatarioDAO.pesquisarPorNumero(numeroDoImovel);
     }
 
-    private List<Destinatario> buscaPorNumeroDoImovel() throws CampoVazioException {
-        List<Destinatario> destinatarios;
-        String numeroDoImovel = leDados("Insira o numero do imóvel: ");
-        destinatarios = destinatarioDAO.pesquisarPorNumero(numeroDoImovel);
-        return destinatarios;
-    }
-
-    private Destinatario buscaPorNome() throws CampoVazioException {
-        String nome = leDados("Nome do destinatário: ");
+    private List<Destinatario> buscaPorNome() {
+        String nome = leDadosRetry("Nome do destinatário: ");
         return destinatarioDAO.pesquisarPorNome(nome);
     }
 }

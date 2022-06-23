@@ -2,60 +2,48 @@ package view;
 
 import javax.swing.*;
 import controle.Comando;
-import controle.Processador;
 import model.*;
-
-import java.sql.SQLException;
+import model.dao.CorrespondenciaDAO;
+import model.dao.DestinatarioDAO;
+import model.dao.MovimentoDAO;
+import view.errors.NaoEncontrado;
 
 public class InterfaceRegistrarEntrada extends InterfaceBase implements Comando {
+    private final DestinatarioDAO destinatarioDAO = new DestinatarioDAO();
+    private final CorrespondenciaDAO correspondenciaDAO = new CorrespondenciaDAO();
+    private final MovimentoDAO movimentoDAO = new MovimentoDAO();
 
     public void executar() {
-        String quemRecebe = null;
-        String numeroImovel = null;
-        String sair = null;
-        boolean teste = true;
-
-
-        teste = true;
-        do {
+        String quemRecebe = leDadosRetry("Informe o nome de quem esta recebendo essa correspondencia");
+        boolean tentar = true;
+        while (tentar) {
             try {
-                numeroImovel = leDados("Informe o número do imóvel do destinatário");
-                teste = false;
-            } catch (CampoVazioException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage() + " novamente");
-            }
-        } while (teste);
+                String numeroImovel = leDadosRetry("Informe o numero do imovel do destinatario");
 
-        teste = true;
-        do {
-            try {
-                quemRecebe = leDados("Informe o nome de quem está recebendo essa correspondencia");
-                teste = false;
-            } catch (CampoVazioException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage() + " novamente");
-            }
-        } while (teste);
-
-            System.out.println("Esse é o resultado da funcionalidade 2");
-
-        teste = true;
-        do {
-            try {
-                sair = leDados("Digite 0 para voltar");
-                int i = Integer.parseInt(sair);
-                if (i != 0) continue;
-                if (i == 0) {
-                    Processador.direcionar("0");
+                Destinatario destinatario = destinatarioDAO.pesquisarPorNumero(numeroImovel);
+                if (destinatario == null) {
+                    throw new NaoEncontrado("Destinatario");
                 }
-                teste = false;
-            } catch (CampoVazioException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage() + " novamente");
-            } catch (NumberFormatException nfe){
-                JOptionPane.showMessageDialog(null, nfe.getMessage() + " Isso não é um número inteiro");
+                Correspondencia correspondencia = novaCartaOuPacote(destinatario);
+                correspondenciaDAO.inserir(correspondencia);
+                movimentoDAO.inserir(new Movimento(correspondencia, quemRecebe));
+                JOptionPane.showMessageDialog(null, "Registrada entrada da correspondencia");
+                voltarAoMenuPrincipal();
+            } catch (NaoEncontrado e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+                tentar = escolha("Tentar outro?\n1) Sim\n2) Nao");
             }
-        } while (teste);
-
-
+        }
     }
 
+    private Correspondencia novaCartaOuPacote(Destinatario destinatario) {
+        boolean eCarta = escolha("Informe se e carta ou pacote:\n1) Carta\n2) Pacote");
+        if(eCarta) {
+            String empresa = leDadosRetry("Informe a empresa que enviou o pacote");
+            return new Pacote(destinatario, empresa);
+        } else {
+            boolean temRecibo = escolha("Recebeu um recibo?\n1) Sim\n2) Nao");
+            return new Carta(destinatario, temRecibo);
+        }
+    }
 }

@@ -14,12 +14,12 @@ public class InterfaceInserirDestinatario extends InterfaceBase implements Coman
     @Override
     public void executar() {
         try {
-            String nome = leDados("Nome do destinatário: ");
-            String numeroDoImovel = leDados("Insira o numero do imóvel: ");
+            String nome = leDadosRetry("Nome do destinatário: ");
+            String numeroDoImovel = leDadosRetry("Insira o numero do imóvel: ");
             Destinatario destinatario = new Destinatario(nome, numeroDoImovel);
             destinatarioDAO.inserir(destinatario);
-            Processador.direcionar("0");
-        } catch (CampoVazioException | NaoEDestinatario exception) {
+            JOptionPane.showMessageDialog(null, "Destinatário " + nome + " inserido!");
+        } catch (NaoEDestinatario exception) {
             exception.printStackTrace();
             JOptionPane.showMessageDialog(null, exception.getMessage());
         }

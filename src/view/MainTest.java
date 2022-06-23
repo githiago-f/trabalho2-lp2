@@ -1,25 +1,20 @@
 package view;
+import controle.Processador;
 import model.Destinatario;
 import model.dao.DestinatarioDAO;
 
 public class MainTest {
     static Destinatario destinatario(int i) {
-        return new Destinatario("Usuario " + i, "123");
+        String nome = "Usuario " + i;
+        return new Destinatario(nome, String.valueOf(i));
     }
 
     public static void main(String[] args) {
-        try {
-            DestinatarioDAO destinatarioDAO = new DestinatarioDAO();
-            for (int i = 0; i < 10; i++) {
-                Destinatario destinatario = destinatario(i);
-                destinatarioDAO.inserir(destinatario);
-                if(i % 2 == 0) {
-                    destinatario.addAutorizado("Julia");
-                    destinatarioDAO.editar(destinatario);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        DestinatarioDAO destinatarioDAO = new DestinatarioDAO();
+        destinatarioDAO.inserir(destinatario(1));
+        destinatarioDAO.inserir(destinatario(2));
+        destinatarioDAO.inserir(destinatario(3));
+
+        Processador.direcionar("0");
     }
 }

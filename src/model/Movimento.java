@@ -78,7 +78,7 @@ public class Movimento
         return "Movimento{" +
                 "correspondencia=" + correspondencia +
                 ", quemRegistra='" + quemRegistra + '\'' +
-                ", data=" + data +
+                ", data=" + verData() +
                 ", quemRetira='" + quemRetira + '\'' +
                 '}';
     }

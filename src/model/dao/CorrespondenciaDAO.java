@@ -34,7 +34,7 @@ public class CorrespondenciaDAO implements OperacoesDAO {
         return correspondenciaList;
     }
 
-    public List<Correspondencia> pesquisarPorDestinatario(Destinatario destinatario) {
+    public List<Correspondencia> pesquisarNaoEntreguesPorDestinatario(Destinatario destinatario) {
         List<Correspondencia> correspondencias = new ArrayList<>();
         for(Correspondencia c : correspondenciaList) {
             if(!c.getStatus() && c.getDestino().equals(destinatario)) {

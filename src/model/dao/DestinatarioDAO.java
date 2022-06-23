@@ -9,8 +9,8 @@ import java.util.*;
 public class DestinatarioDAO implements OperacoesDAO {
     private static final Map<String, Destinatario> destinatarioMap = new HashMap<>();
 
-    private static String getKey(String nome) {
-        return nome.toLowerCase().replaceAll("/\s/", "_");
+    private static String getKey(String numeroImovel) {
+        return numeroImovel.toLowerCase();
     }
 
     public void inserir(Object obj) {
@@ -19,7 +19,7 @@ public class DestinatarioDAO implements OperacoesDAO {
         }
         Destinatario destinatario = (Destinatario) obj;
         destinatarioMap.put(
-                getKey(destinatario.getNome()),
+                getKey(destinatario.getNumeroImovel()),
                 destinatario
         );
     }
@@ -29,7 +29,7 @@ public class DestinatarioDAO implements OperacoesDAO {
             throw new NaoEDestinatario();
         }
         Destinatario destinatario = (Destinatario) obj;
-        destinatarioMap.remove(getKey(destinatario.getNome()));
+        destinatarioMap.remove(getKey(destinatario.getNumeroImovel()));
     }
 
     public void editar(Object newObj) throws NaoEncontrado {
@@ -37,11 +37,12 @@ public class DestinatarioDAO implements OperacoesDAO {
             throw new NaoEDestinatario();
         }
         Destinatario destinatario = (Destinatario) newObj;
-        if(!destinatarioMap.containsKey(getKey(destinatario.getNome()))) {
+        String key = getKey(destinatario.getNumeroImovel());
+        if(!destinatarioMap.containsKey(key)) {
             throw new NaoEncontrado("Destinatario");
         }
         destinatarioMap.put(
-                getKey(destinatario.getNome()),
+                key,
                 destinatario
         );
     }
@@ -51,21 +52,22 @@ public class DestinatarioDAO implements OperacoesDAO {
         return new ArrayList<>(destinatarioMap.values());
     }
 
-    public Destinatario pesquisarPorNome(String nome) {
-        if(!destinatarioMap.containsKey(getKey(nome))) {
-            return null;
-        }
-        return destinatarioMap.get(getKey(nome));
-    }
-
-    public List<Destinatario> pesquisarPorNumero(String numeroApartamento) {
+    public List<Destinatario> pesquisarPorNome(String nome) {
         List<Destinatario> destinatarios = pesquisar();
         List<Destinatario> result = new ArrayList<>();
         for (Destinatario des : destinatarios) {
-            if (des.getNumeroImovel().equals(numeroApartamento)) {
+            if (des.getNome().equals(nome)) {
                 result.add(des);
             }
         }
         return result;
+
+    }
+
+    public Destinatario pesquisarPorNumero(String numeroImovel) {
+        if(!destinatarioMap.containsKey(getKey(numeroImovel))) {
+            return null;
+        }
+        return destinatarioMap.get(getKey(numeroImovel));
     }
 }
