@@ -9,5 +9,4 @@ public class InterfacePesquisarMovimentosData extends InterfaceBase implements C
     public void executar() {
         //TODO: implementar as ações necessárias para pesquisar todos os movimentos realizados em uma determinada data
     }
-
 }

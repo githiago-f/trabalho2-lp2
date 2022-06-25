@@ -13,6 +13,5 @@ public class InterfacePesquisarTodosMovimentos extends InterfaceBase implements 
     public void executar() {
         List<Movimento> movimentos = movimentoDAO.pesquisar();
         JOptionPane.showMessageDialog(null, asString(movimentos));
-        voltarAoMenuPrincipal();
     }
 }

@@ -1,5 +1,7 @@
 package model.dao;
 
+import model.Correspondencia;
+import model.Destinatario;
 import model.Movimento;
 import view.errors.NaoEncontrado;
 
@@ -22,7 +24,7 @@ public class MovimentoDAO implements OperacoesDAO {
     @Override
     public void editar(Object newObj) throws NaoEncontrado {
         int index = movimentosList.indexOf((Movimento) newObj);
-        if(index == -1) {
+        if (index == -1) {
             throw new NaoEncontrado("Movimento");
         }
         movimentosList.set(index, (Movimento) newObj);
@@ -32,4 +34,20 @@ public class MovimentoDAO implements OperacoesDAO {
     public List<Movimento> pesquisar() {
         return movimentosList;
     }
+
+    public List<Movimento> pesquisarPorDestinatario(Destinatario destinatario) {
+
+        List<Movimento> resultado = new ArrayList<>();
+
+        for (Movimento movimento : movimentosList) {
+            Correspondencia correspondencia = movimento.getCorrespondencia();
+            if (correspondencia.getDestino().equals(destinatario)) {
+                resultado.add(movimento);
+            }
+        }
+        return resultado;
+
+    }
+
+
 }
