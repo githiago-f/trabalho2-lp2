@@ -39,11 +39,11 @@ public class InterfaceRegistrarEntrada extends InterfaceBase implements Comando 
     private Correspondencia novaCartaOuPacote(Destinatario destinatario) {
         boolean eCarta = escolha("Informe se e carta ou pacote:\n1) Carta\n2) Pacote");
         if(eCarta) {
-            String empresa = leDadosRetry("Informe a empresa que enviou o pacote");
-            return new Pacote(destinatario, empresa);
-        } else {
             boolean temRecibo = escolha("Recebeu um recibo?\n1) Sim\n2) Nao");
             return new Carta(destinatario, temRecibo);
+        } else {
+            String empresa = leDadosRetry("Informe a empresa que enviou o pacote");
+            return new Pacote(destinatario, empresa);
         }
     }
 }
