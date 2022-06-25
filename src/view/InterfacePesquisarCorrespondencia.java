@@ -15,12 +15,9 @@ public class InterfacePesquisarCorrespondencia extends InterfaceBase implements 
 
     @Override
     public void executar() {
-        // TODO: implementar as ações necessárias para pesquisar se existem correspondência
-        //  não entregues para um determinado destinatário, identificando se são cartas ou pacotes
-        String numeroImovel = leDadosRetry("Informe o numero do imóvel");
-        Destinatario destinatario = destinatarioDAO.pesquisarPorNumero(numeroImovel);
+        String cpf = leDadosRetry("Informe o cpf do destinatario");
+        Destinatario destinatario = destinatarioDAO.pesquisaPorCpf(cpf);
         List<Correspondencia> correspondencias = correspondenciaDAO.pesquisarNaoEntreguesPorDestinatario(destinatario);
         JOptionPane.showMessageDialog(null, asString(correspondencias));
     }
-
 }

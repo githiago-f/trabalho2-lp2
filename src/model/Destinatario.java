@@ -10,11 +10,13 @@ import java.util.*;
  */
 public class Destinatario
 {
+    private final String cpf;
     private final String nome;
     private final String numeroImovel;
     private final List<String> autorizados; //lista de pessoas autorizadas a retirar correspondencias
 
-    public Destinatario(String nome, String numeroImovel) {
+    public Destinatario(String cpf, String nome, String numeroImovel) {
+        this.cpf = cpf;
         this.nome = nome;
         this.numeroImovel = numeroImovel;
         this.autorizados = new ArrayList<>();
@@ -27,7 +29,11 @@ public class Destinatario
     public String getNumeroImovel() {
         return numeroImovel;
     }
-    
+
+    public String getCpf() {
+        return cpf;
+    }
+
     public String toString() {
         return "Nome = "+ nome +
                 "\nNumero do Imóvel = "+ numeroImovel;

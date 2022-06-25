@@ -15,8 +15,8 @@ public class InterfaceExcluirDestinatario extends InterfaceBase implements Coman
     @Override
     public void executar() {
         try {
-            String nome = leDadosRetry("Informe o endereço do destinatário a ser removido");
-            Destinatario destinatario = destinatarioDAO.pesquisarPorNumero(nome);
+            String cpf = leDadosRetry("Informe o cpf do destinatário a ser removido");
+            Destinatario destinatario = destinatarioDAO.pesquisaPorCpf(cpf);
             if(destinatario == null) {
                 throw new NaoEncontrado("Destinatario");
             }

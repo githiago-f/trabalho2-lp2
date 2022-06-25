@@ -23,8 +23,10 @@ public class InterfacePesquisarDestinatario extends InterfaceBase implements Com
                     destinatarios.addAll(buscaPorNome());
                     break;
                 case "2":
-                    destinatarios.add(buscaPorNumeroDoImovel());
+                    destinatarios.addAll(buscaPorNumeroDoImovel());
                     break;
+                case "3":
+                    destinatarios.add(buscaPorCpf());
                 default:
                     throw new PropriedadeInvalida(nomeOuImovel, "Destinatário");
             }
@@ -35,13 +37,18 @@ public class InterfacePesquisarDestinatario extends InterfaceBase implements Com
         }
     }
 
-    private Destinatario buscaPorNumeroDoImovel() {
-        String numeroDoImovel = leDadosRetry("Insira o numero do imóvel: ");
+    private List<Destinatario> buscaPorNumeroDoImovel() {
+        String numeroDoImovel = leDadosRetry("Insira o numero do imóvel");
         return destinatarioDAO.pesquisarPorNumero(numeroDoImovel);
     }
 
     private List<Destinatario> buscaPorNome() {
-        String nome = leDadosRetry("Nome do destinatário: ");
+        String nome = leDadosRetry("Informe nome do destinatário");
         return destinatarioDAO.pesquisarPorNome(nome);
+    }
+
+    private Destinatario buscaPorCpf() {
+        String cpf = leDadosRetry("Informe o cpf do destinatario");
+        return destinatarioDAO.pesquisaPorCpf(cpf);
     }
 }

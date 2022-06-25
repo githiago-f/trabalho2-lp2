@@ -8,6 +8,8 @@ import model.dao.DestinatarioDAO;
 import model.dao.MovimentoDAO;
 import view.errors.NaoEncontrado;
 
+import java.util.List;
+
 public class InterfaceRegistrarEntrada extends InterfaceBase implements Comando {
     private final DestinatarioDAO destinatarioDAO = new DestinatarioDAO();
     private final CorrespondenciaDAO correspondenciaDAO = new CorrespondenciaDAO();
@@ -18,17 +20,18 @@ public class InterfaceRegistrarEntrada extends InterfaceBase implements Comando 
         boolean tentar = true;
         while (tentar) {
             try {
-                String numeroImovel = leDadosRetry("Informe o numero do imovel do destinatario");
+                String numeroDoAp = leDadosRetry("Informe o numero do ap do destinatario");
 
-                Destinatario destinatario = destinatarioDAO.pesquisarPorNumero(numeroImovel);
-                if (destinatario == null) {
+                List<Destinatario> destinatarios = destinatarioDAO.pesquisarPorNumero(numeroDoAp);
+                if (destinatarios.isEmpty()) {
                     throw new NaoEncontrado("Destinatario");
                 }
+                tentar = false;
+                Destinatario destinatario = destinatarios.get(0); // só uma pessoa por ap
                 Correspondencia correspondencia = novaCartaOuPacote(destinatario);
                 correspondenciaDAO.inserir(correspondencia);
                 movimentoDAO.inserir(new Movimento(correspondencia, quemRecebe));
                 JOptionPane.showMessageDialog(null, "Registrada entrada da correspondencia");
-                voltarAoMenuPrincipal();
             } catch (NaoEncontrado e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
                 tentar = escolha("Tentar outro?\n1) Sim\n2) Nao");
