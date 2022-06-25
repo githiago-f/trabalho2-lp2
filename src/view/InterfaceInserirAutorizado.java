@@ -15,12 +15,12 @@ public class InterfaceInserirAutorizado extends InterfaceBase implements Comando
     @Override
     public void executar() {
         try {
-            String nome = leDadosRetry("Informe o numero do imovel do destinatário:");
-            Destinatario destinatario = destinatarioDAO.pesquisarPorNumero(nome);
+            String cpf = leDadosRetry("Informe o cpf do destinatário:");
+            Destinatario destinatario = destinatarioDAO.pesquisaPorCpf(cpf);
             if(destinatario == null) {
                 throw new NaoEncontrado("Destinatario");
             }
-            String autorizado = leDadosRetry("Informe o nome do(a) autorizado(a)?");
+            String autorizado = leDadosRetry("Informe o cpf do(a) autorizado(a)?");
             destinatario.addAutorizado(autorizado);
             destinatarioDAO.editar(destinatario);
             String message = autorizado + " foi autorizado a retirar itens para " + destinatario.getNome();

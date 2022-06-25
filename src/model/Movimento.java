@@ -13,16 +13,15 @@ import java.util.Objects;
 public class Movimento
 {
     private Correspondencia correspondencia;
-    private String quemRegistra; //Deve estar na lista de autorizados do Destinatario
+    private String quemRegistra;
     private Calendar data;
-    private String quemRetira; //Só para movimento de saída
+    private String quemRetira; // Deve estar na lista de autorizados do Destinatario. Só para movimento de saída
 
     //model.Movimento de recebimento da correspondencia pela portaria
     public Movimento(Correspondencia correspondencia, String quemRegistra) {
             this.setCorrespondencia(correspondencia);
             this.setQuemRegistra(quemRegistra);
             setData(new GregorianCalendar());
-
     }
 
     //model.Movimento de entrega da correspondencia para o destinatário

@@ -18,7 +18,7 @@ public class Processador {
         comandos.put("0", "view.InterfacePrincipal");
         comandos.put("1", "view.InterfaceSair");
         comandos.put("2", "view.InterfaceRegistrarEntrada");
-        comandos.put("3", "view.InterfaceRegistrarSaida.java");
+        comandos.put("3", "view.InterfaceRegistrarSaida");
         comandos.put("4", "view.InterfacePesquisarCorrespondencia");
         comandos.put("5", "view.InterfacePesquisarMovimentosDestinatario");
         comandos.put("6", "view.InterfacePesquisarMovimentosData");

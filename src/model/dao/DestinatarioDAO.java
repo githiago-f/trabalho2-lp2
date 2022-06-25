@@ -9,8 +9,8 @@ import java.util.*;
 public class DestinatarioDAO implements OperacoesDAO {
     private static final Map<String, Destinatario> destinatarioMap = new HashMap<>();
 
-    private static String getKey(String numeroImovel) {
-        return numeroImovel.toLowerCase();
+    private static String getKey(String cpf) {
+        return cpf.toLowerCase();
     }
 
     public void inserir(Object obj) {
@@ -19,7 +19,7 @@ public class DestinatarioDAO implements OperacoesDAO {
         }
         Destinatario destinatario = (Destinatario) obj;
         destinatarioMap.put(
-                getKey(destinatario.getNumeroImovel()),
+                getKey(destinatario.getCpf()),
                 destinatario
         );
     }
@@ -29,7 +29,7 @@ public class DestinatarioDAO implements OperacoesDAO {
             throw new NaoEDestinatario();
         }
         Destinatario destinatario = (Destinatario) obj;
-        destinatarioMap.remove(getKey(destinatario.getNumeroImovel()));
+        destinatarioMap.remove(getKey(destinatario.getCpf()));
     }
 
     public void editar(Object newObj) throws NaoEncontrado {
@@ -37,7 +37,7 @@ public class DestinatarioDAO implements OperacoesDAO {
             throw new NaoEDestinatario();
         }
         Destinatario destinatario = (Destinatario) newObj;
-        String key = getKey(destinatario.getNumeroImovel());
+        String key = getKey(destinatario.getCpf());
         if(!destinatarioMap.containsKey(key)) {
             throw new NaoEncontrado("Destinatario");
         }
@@ -61,13 +61,24 @@ public class DestinatarioDAO implements OperacoesDAO {
             }
         }
         return result;
-
     }
 
-    public Destinatario pesquisarPorNumero(String numeroImovel) {
-        if(!destinatarioMap.containsKey(getKey(numeroImovel))) {
+    public List<Destinatario> pesquisarPorNumero(String numeroImovel) {
+        List<Destinatario> destinatarios = pesquisar();
+        List<Destinatario> result = new ArrayList<>();
+        for (Destinatario des : destinatarios) {
+            if (des.getNumeroImovel().equals(numeroImovel)) {
+                result.add(des);
+            }
+        }
+        return result;
+    }
+
+    public Destinatario pesquisaPorCpf(String cpf) {
+        String key = getKey(cpf);
+        if(!destinatarioMap.containsKey(key)) {
             return null;
         }
-        return destinatarioMap.get(getKey(numeroImovel));
+        return destinatarioMap.get(key);
     }
 }
