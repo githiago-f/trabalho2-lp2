@@ -55,7 +55,7 @@ public class DestinatarioDAO implements OperacoesDAO {
         List<Destinatario> destinatarios = pesquisar();
         List<Destinatario> result = new ArrayList<>();
         for (Destinatario des : destinatarios) {
-            if (des.getNome().equals(nome)) {
+            if (des.getNome().equalsIgnoreCase(nome)) {
                 result.add(des);
             }
         }
@@ -66,7 +66,7 @@ public class DestinatarioDAO implements OperacoesDAO {
         List<Destinatario> destinatarios = pesquisar();
         List<Destinatario> result = new ArrayList<>();
         for (Destinatario des : destinatarios) {
-            if (des.getNumeroImovel().equals(numeroImovel)) {
+            if (des.getNumeroImovel().equalsIgnoreCase(numeroImovel)) {
                 result.add(des);
             }
         }

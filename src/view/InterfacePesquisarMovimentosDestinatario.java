@@ -23,7 +23,7 @@ public class InterfacePesquisarMovimentosDestinatario extends InterfaceBase impl
             String cpfDestinatario = leDadosRetry("Informe o cpf do destinatario");
             Destinatario destinatario = destinatarioDAO.pesquisaPorCpf(cpfDestinatario);
             if (destinatario == null) {
-            throw new NaoEncontrado("Destinatario");
+                throw new NaoEncontrado("Destinatario");
             }
             List<Movimento> movimentos = movimentoDAO.pesquisarPorDestinatario(destinatario);
             if (movimentos.isEmpty()){

@@ -19,18 +19,18 @@ public class Movimento
 
     //model.Movimento de recebimento da correspondencia pela portaria
     public Movimento(Correspondencia correspondencia, String quemRegistra) {
-            this.setCorrespondencia(correspondencia);
-            this.setQuemRegistra(quemRegistra);
+            setCorrespondencia(correspondencia);
+            setQuemRegistra(quemRegistra);
             setData(new GregorianCalendar());
     }
 
     //model.Movimento de entrega da correspondencia para o destinatário
     public Movimento(Correspondencia correspondencia, String quemRetira, String quemRegistra) {
             correspondencia.setStatus(true);
-            this.setQuemRetira(quemRetira);
-            this.setQuemRegistra(quemRegistra);
+            setQuemRetira(quemRetira);
+            setQuemRegistra(quemRegistra);
             setData(new GregorianCalendar());
-
+            setCorrespondencia(correspondencia);
     }
     
     private String verData(){

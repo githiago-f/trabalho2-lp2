@@ -37,9 +37,7 @@ public class MovimentoDAO implements OperacoesDAO {
     }
 
     public List<Movimento> pesquisarPorDestinatario(Destinatario destinatario) {
-
         List<Movimento> resultado = new ArrayList<>();
-
         for (Movimento movimento : movimentosList) {
             Correspondencia correspondencia = movimento.getCorrespondencia();
             if (correspondencia.getDestino().equals(destinatario)) {
@@ -47,13 +45,12 @@ public class MovimentoDAO implements OperacoesDAO {
             }
         }
         return resultado;
-
     }
 
     private boolean compareCalendars(Calendar calendar, Calendar calendar2) {
         return calendar.get(Calendar.DATE) == calendar2.get(Calendar.DATE) &&
-        calendar.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH) &&
-        calendar.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR);
+            calendar.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH) &&
+            calendar.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR);
     }
 
     public List<Movimento> pesquisarPorData(Calendar calendar) {
