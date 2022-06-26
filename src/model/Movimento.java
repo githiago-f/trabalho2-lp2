@@ -71,6 +71,10 @@ public class Movimento
         this.quemRetira = quemRetira;
     }
 
+    public String getTipo() {
+        return quemRetira == null ? "Entrada" : "Saida";
+    }
+
 
     @Override
     public String toString() {
@@ -79,6 +83,7 @@ public class Movimento
                 ", quemRegistra='" + quemRegistra + '\'' +
                 ", data=" + verData() +
                 ", quemRetira='" + quemRetira + '\'' +
+                ", tipo='" + getTipo() + '\'' +
                 '}';
     }
 
