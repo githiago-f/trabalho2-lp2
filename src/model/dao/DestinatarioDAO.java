@@ -20,8 +20,7 @@ public class DestinatarioDAO implements OperacoesDAO {
         Destinatario destinatario = (Destinatario) obj;
         destinatarioMap.put(
                 getKey(destinatario.getCpf()),
-                destinatario
-        );
+                destinatario);
     }
 
     public void excluir(Object obj) {

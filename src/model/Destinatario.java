@@ -13,7 +13,7 @@ public class Destinatario
     private final String cpf;
     private final String nome;
     private final String numeroImovel;
-    private final List<String> autorizados; //lista de pessoas autorizadas a retirar correspondencias
+    private final List<String> autorizados;
 
     public Destinatario(String cpf, String nome, String numeroImovel) {
         this.cpf = cpf;
@@ -35,11 +35,12 @@ public class Destinatario
     }
 
     public String toString() {
-        return "Nome = "+ nome +
-                "\nNumero do Imóvel = "+ numeroImovel;
+        return "Nome = " + nome +
+                "\nNumero do Imovel = " + numeroImovel +
+                "\nCpf =" + cpf;
     }
 
-    public void addAutorizado(String nome) { autorizados.add(nome); }
+    public void addAutorizado(String cpfAutorizado) { autorizados.add(cpfAutorizado); }
 
     public List<String> getAutorizados() {
         return Collections.unmodifiableList(autorizados);

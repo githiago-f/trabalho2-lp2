@@ -1,7 +1,6 @@
 package view;
 
 import controle.Comando;
-import controle.Processador;
 import model.*;
 import model.dao.CorrespondenciaDAO;
 import model.dao.DestinatarioDAO;
@@ -18,6 +17,10 @@ public class InterfacePesquisarCorrespondencia extends InterfaceBase implements 
         String cpf = leDadosRetry("Informe o cpf do destinatario");
         Destinatario destinatario = destinatarioDAO.pesquisaPorCpf(cpf);
         List<Correspondencia> correspondencias = correspondenciaDAO.pesquisarNaoEntreguesPorDestinatario(destinatario);
-        JOptionPane.showMessageDialog(null, asString(correspondencias));
+        if(correspondencias.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhuma correspondencia para ser entrege.");
+        } else {
+            JOptionPane.showMessageDialog(null, asString(correspondencias));
+        }
     }
 }
