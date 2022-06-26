@@ -34,22 +34,11 @@ public class InterfaceRegistrarSaida extends InterfaceBase implements Comando {
                 throw new NaoEncontrado("Correspondecia");
             }
             String retirante = leDadosRetry("Informe o cpf de quem retira");
-            boolean podeRetirar = retirante.equals(destinatario.getCpf());
-            if (!podeRetirar) {
-                for (String nomeAutorizado : destinatario.getAutorizados()) {
-                    if (retirante.equals(nomeAutorizado)) {
-                        podeRetirar = true;
-                        break;
-                    }
-                }
-            }
-            if (!podeRetirar) {
-                throw new NaoPodeRetirar();
-            }
             for (Correspondencia correspondencia : naoEntregues) {
-                Movimento movimento = new Movimento(correspondencia, quemRegistraSaida);
-                movimento.setQuemRetira(retirante);
-                correspondencia.setStatus(true);
+                if (!correspondencia.podeRetirar(retirante)) {
+                    throw new NaoPodeRetirar();
+                }
+                Movimento movimento = new Movimento(correspondencia, retirante, quemRegistraSaida);
                 movimentoDAO.inserir(movimento);
                 correspondenciaDAO.editar(correspondencia);
             }

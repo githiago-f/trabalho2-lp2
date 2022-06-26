@@ -57,4 +57,16 @@ public abstract class Correspondencia implements Serializable
     public void setDestino(Destinatario destino) {
         this.destino = destino;
     }
+
+    public boolean podeRetirar(String retirante) {
+        if(getDestino().getCpf().equals(retirante)) {
+            return true;
+        }
+        for (String nomeAutorizado : getDestino().getAutorizados()) {
+            if (retirante.equals(nomeAutorizado)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
