@@ -1,19 +1,22 @@
 package view;
 import controle.Processador;
+import model.Carta;
+import model.Correspondencia;
 import model.Destinatario;
+import model.dao.CorrespondenciaDAO;
 import model.dao.DestinatarioDAO;
 
 public class MainTest {
-    static Destinatario destinatario(int i) {
-        String nome = "Usuario " + i;
-        return new Destinatario(String.valueOf(i), nome, String.valueOf(i));
-    }
-
     public static void main(String[] args) {
         DestinatarioDAO destinatarioDAO = new DestinatarioDAO();
-        destinatarioDAO.inserir(destinatario(1));
-        destinatarioDAO.inserir(destinatario(2));
-        destinatarioDAO.inserir(destinatario(3));
+        CorrespondenciaDAO correspondenciaDAO = new CorrespondenciaDAO();
+
+        Destinatario nina = new Destinatario("132", "Nina", "32");
+        nina.addAutorizado("133");
+        destinatarioDAO.inserir(nina);
+
+        Correspondencia correspondencia = new Carta(nina, true);
+        correspondenciaDAO.inserir(correspondencia);
 
         Processador.direcionar("0");
     }
